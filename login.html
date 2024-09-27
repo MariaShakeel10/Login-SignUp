@@ -70,6 +70,10 @@
             cursor: pointer;
         }
 
+        a {
+            text-decoration: none;
+        }
+
         #theme-switch {
             height: 50px;
             width: 50px;
@@ -167,6 +171,7 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
     <!-- JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         let darkmode = localStorage.getItem('darkmode')
         const themeSwitch = document.getElementById('theme-switch')
@@ -193,14 +198,16 @@
             // Retrieve values from input fields
             let emailId = document.getElementById('email1').value;
             let password = document.getElementById('password1').value;
-
+//  storage
+const storedEmail =localStorage.getItem("userEmailId")
+const storedPassword =localStorage.getItem("userPassword")
             // Example validation (replace with actual login logic)
-            if (emailId && password) {
-                alert("Login successful!");
+            if (emailId===storedEmail && password===storedPassword) {
+                Swal.fire("Login successful");;
                 // Redirect to the main page or perform login logic
                 setInterval(window.location.href = "index.html", 6000) // Change to your desired URL
             } else {
-                alert("Please enter both email and password.");
+                Swal.fire("Invalid email or password");
             }
         }
 

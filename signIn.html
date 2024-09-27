@@ -153,7 +153,7 @@
                     </div>
                     <div class="mb-3">
                         <p class="white-bg black-color">CNIC</p>
-                        <input type="text" class="form-control" placeholder="" id="cnic" aria-label="Username">
+                        <input type="text" class="form-control" placeholder="XXXXX-XXXXXXX-X" id="cnic" aria-label="Username">
                     </div>
                     <div class="mb-3">
                         <p class="white-bg black-color">Password</p>
@@ -180,6 +180,7 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
     <!-- JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         let darkmode = localStorage.getItem('darkmode')
         const themeSwitch = document.getElementById('theme-switch')
@@ -200,7 +201,6 @@
             darkmode = localStorage.getItem('darkmode')
             darkmode !== "active" ? enableDarkmode() : disableDarkmode()
         })
-
         function getInputValues() {
             return {
                 userEmailId: document.getElementById('email2').value,
@@ -220,38 +220,39 @@
             const patternPhone = /^((\+92)|(0092))-{0,1}\d{3}-{0,1}\d{7}$|^\d{11}$|^\d{4}-\d{7}$/;
             const patternCnic = /^[0-9]{5}-[0-9]{7}-[0-9]$/;
             if (!patternEmail.test(userEmailId)) {
-                alert("Invalid email id.");
+                Swal.fire("Invalid email id.");
                 return false;
             } if (!patternPhone.test(phone)) {
-                alert("Invalid Phone number.");
+                Swal.fire("Invalid Phone number.");
                 return false;
             } if (!patternCnic.test(cnic)) {
-                alert("Invalid CNIC.");
+                Swal.fire("Invalid CNIC.");
                 return false;
             }
             if (userPassword.length < minNumberofChars || userPassword.length > maxNumberofChars) {
-                alert("Password should be between 6 and 16 characters.");
+                Swal.fire("Password should be between 6 and 16 characters.");
                 return false;
             }
             if (!regularExpression.test(userPassword)) {
-                alert("Password should contain at least one number and one special character.");
+                Swal.fire("Password should contain at least one number and one special character.");
                 return false;
             }
-
-
-
 
             sign();
         }
 
         function sign() {
-            const { userPassword, confirmPassword } = getInputValues();
+            const { userPassword, confirmPassword,userEmailId,phone,cnic } = getInputValues();
+            localStorage.setItem("userEmailId",userEmailId)
+            localStorage.setItem("userPassword",userPassword)
+            localStorage.setItem("phone",phone)
+            localStorage.setItem("cnic",cnic)
             if (userPassword === confirmPassword) {
                 setTimeout(() => {
                     window.location.href = "login.html";
                 }, 4000);
             } else {
-                alert("Passwords do not match.");
+                Swal.fire("Passwords do not match.");
             }
         }
 
